@@ -49,6 +49,11 @@ app.use(cors())  //May add in corsOptions here later
 app.use(express.json())
 app.use('/restaurants/', restaurantsController)
 
+////Reroute from root to /restaurants
+app.get('/', (req, res) => {
+    res.redirect('/restaurants')
+})
+
 ////////////////
 /// LISTENER
 ////////////////
