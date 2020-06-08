@@ -3,7 +3,7 @@
 ////////////////
 const express = require('express')
 const router = express.Router()
-const Restaurant = require('../models/restaurants.js')
+const User = require('../models/users.js')
 const jwt = require('jsonwebtoken') // Token for later
 
 ////////////////
@@ -13,8 +13,8 @@ const jwt = require('jsonwebtoken') // Token for later
 ////Create Route////
 router.post('/', async (req, res) => {
     try {
-        const createdRestaurant = await Restaurant.create(req.body)
-        res.status(200).json(createdRestaurant)
+        const createdUser = await User.create(req.body)
+        res.status(200).json(createdUser)
     } catch(error) {
         res.status(400).json(error)
     }
@@ -23,8 +23,8 @@ router.post('/', async (req, res) => {
 ////Read Route////
 router.get('/', async (req, res) => {
     try {
-        const restaurants = await Restaurant.find({})
-        res.status(200).json(restaurants)
+        const users = await User.find({})
+        res.status(200).json(users)
     } catch(error){
         res.status(400).json(error)
     }
@@ -33,8 +33,8 @@ router.get('/', async (req, res) => {
 ////Delete Route////
 router.delete('/:id', async (req, res) => {
     try {
-        const deletedRestaurant = await Restaurant.findByIdAndDelete(req.params.id)
-        res.status(200).json(deletedRestaurant)
+        const deletedUser = await User.findByIdAndDelete(req.params.id)
+        res.status(200).json(deletedUser)
     } catch(error) {
         res.status(400).json(error)
     }
@@ -43,11 +43,11 @@ router.delete('/:id', async (req, res) => {
 ////Update Route////
 router.put('/:id', async (req, res) => {
     try {
-        const updatedRestaurant = await Restaurant.findByIdAndUpdate(
+        const updatedUser = await User.findByIdAndUpdate(
             req.params.id,
             req.body
         )
-        res.status(200).json(updatedRestaurant)
+        res.status(200).json(updatedUser)
     } catch(error) {
         res.status(400).json(error)
     }
