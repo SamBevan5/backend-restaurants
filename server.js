@@ -6,6 +6,9 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 const cors = require('cors')
+const User = require('./models/users.js')
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 ////////////////
 /// GLOBALS
@@ -16,13 +19,10 @@ const usersController = require('./controllers/users.js')
 const db = mongoose.connection
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/'
 
-////Dummy User////
-const user = {username: "Foodie", password: "yelp"}
-
 // //Felt important. Might delete later...
-const whitelist = [
-    'http:localhost:1985'
-]
+// const whitelist = [
+//     'http:localhost:1985'
+// ]
 
 // //Object to Configure CORS middleware
 // const corsOptions = {
@@ -54,15 +54,25 @@ app.use(express.json())
 app.use('/restaurants/', restaurantsController)
 app.use('/users/', usersController)
 
-////Login Route////
+
+app.us
+
 app.post('/login', async (req, res) => {
-    const {username, password} = req.body
-    if(username === user.username && password === user.password){
-        const token = jwt.sign({username}, 'secret')
-        res.status(200).json(token)
-    } else {
-        res.status(400).send('Wrong username or password')
-    }
+    User.findOne({ username: req.body.username}, (error, foundUser) => {
+        console.log(foundUser.username)
+        if(error) {
+            res.status(400).send('DB has a problem')
+        } else if (!foundUser) {
+            res.status(400).send('User not found')
+        } else {
+            if (bcrypt.compareSync(req.body.password, foundUser.password)) {
+                const token = jwt.sign(foundUser.username, 'secret')
+                res.status(200).json(token)
+            } else {
+                res.status(400).send('Password does not match')
+            }
+        }
+    })
 })
 
 ////Reroute from root to /restaurants
