@@ -20,9 +20,9 @@ const db = mongoose.connection
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/'
 
 // //Felt important. Might delete later...
-const whitelist = [
-    'http:localhost:1985'
-]
+// const whitelist = [
+//     'http:localhost:1985'
+// ]
 
 // //Object to Configure CORS middleware
 // const corsOptions = {
@@ -54,6 +54,8 @@ app.use(express.json())
 app.use('/restaurants/', restaurantsController)
 app.use('/users/', usersController)
 
+
+app.us
 
 app.post('/login', async (req, res) => {
     User.findOne({ username: req.body.username}, (error, foundUser) => {
