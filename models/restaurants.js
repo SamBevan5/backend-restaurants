@@ -3,7 +3,7 @@ const {Schema, model} = require('mongoose')
 const restaurantSchema = new Schema({
   restaurant: {
     cuisines: String,
-    name: String,
+    name: {type: String, unique: true},
     thumb: String,
     url: String,
     location: {
