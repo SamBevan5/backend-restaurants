@@ -49,7 +49,7 @@ router.get('/', async (req, res) => {
 })
 
 ////Delete Route////
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
         const deletedRestaurant = await Restaurant.findByIdAndDelete(req.params.id)
         res.status(200).json(deletedRestaurant)
@@ -59,7 +59,7 @@ router.delete('/:id', auth, async (req, res) => {
 })
 
 ////Update Route////
-router.put('/:id', auth, async (req, res) => {
+router.put('/:id', async (req, res) => {
     try {
         const updatedRestaurant = await Restaurant.findByIdAndUpdate(
             req.params.id,
