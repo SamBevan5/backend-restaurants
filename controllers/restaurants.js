@@ -17,7 +17,7 @@ const auth = (req, res, next) => {
         if (!verified) {
             return res.status(401).json({msg: "Not authorized"})
         }
-        console.log(verified)
+        // console.log(verified)
     }   
     catch (error) {
         res.status(500).json({error: error.message})
