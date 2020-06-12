@@ -6,12 +6,30 @@ const router = express.Router()
 const Restaurant = require('../models/restaurants.js')
 const jwt = require('jsonwebtoken') // Token for later
 
+// ANDY Auth Middleware
+const auth = (req, res, next) => {
+    try {
+        const token = req.header('x-auth-token')
+        if (!token) {
+            return res.status(401).json({msg: "Not authorized"})
+        }
+        const verified = jwt.verify(token, process.env.jwtSECRET)
+        if (!verified) {
+            return res.status(401).json({msg: "Not authorized"})
+        }
+        console.log(verified)
+    }   
+    catch (error) {
+        res.status(500).json({error: error.message})
+    }
+}
+
 ////////////////
 /// ROUTES
 ////////////////
 
 ////Create Route////
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     try {
         const createdRestaurant = await Restaurant.create(req.body)
         res.status(200).json(createdRestaurant)
@@ -31,7 +49,7 @@ router.get('/', async (req, res) => {
 })
 
 ////Delete Route////
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
     try {
         const deletedRestaurant = await Restaurant.findByIdAndDelete(req.params.id)
         res.status(200).json(deletedRestaurant)
@@ -41,7 +59,7 @@ router.delete('/:id', async (req, res) => {
 })
 
 ////Update Route////
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth, async (req, res) => {
     try {
         const updatedRestaurant = await Restaurant.findByIdAndUpdate(
             req.params.id,
