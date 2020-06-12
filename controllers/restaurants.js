@@ -8,25 +8,25 @@ const jwt = require('jsonwebtoken') // Token for later
 // const auth = require('./auth')
 
 // ANDY Auth Middleware
-// const auth = (req, res, next) => {
-//     try {
-//         const token = req.header('x-auth-token')
-//         if (!token) {
-//             return res.status(401).json({msg: "Not authorized"})
-//         }
-//         const verified = jwt.verify(token, process.env.jwtSECRET)
-//         if (!verified) {
-//             return res.status(401).json({msg: "Not authorized"})
-//         }
-//         console.log(verified)
-//     }   
-//     catch (error) {
-//         res.status(500).json({error: error.message})
-//     }
-// }
+const auth = (req, res, next) => {
+    try {
+        const token = req.header('x-auth-token')
+        if (!token) {
+            return res.status(401).json({msg: "Not authorized"})
+        }
+        const verified = jwt.verify(token, process.env.jwtSECRET)
+        if (!verified) {
+            return res.status(401).json({msg: "Not authorized"})
+        }
+        console.log(verified)
+    }   
+    catch (error) {
+        res.status(500).json({error: error.message})
+    }
+}
 
 // AUTH MIDDLEWARE
-const auth = async (req, res, next) => {
+/*const auth = async (req, res, next) => {
     //example header => "Authorization":"bearer kdf909sdfsd98f987d"
     const { authorization } = req.headers; //decon auth header
     //check if header is present
@@ -42,7 +42,7 @@ const auth = async (req, res, next) => {
     } else {
         res.status(400).send('NO AUTHORIZATION HEADER');
     }
-};
+};*/
 ////////////////
 /// ROUTES
 ////////////////
