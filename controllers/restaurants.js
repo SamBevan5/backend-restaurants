@@ -5,7 +5,6 @@ const express = require('express')
 const router = express.Router()
 const Restaurant = require('../models/restaurants.js')
 const jwt = require('jsonwebtoken') // Token for later
-// const auth = require('./auth')
 
 // ANDY Auth Middleware
 const auth = (req, res, next) => {
@@ -25,24 +24,6 @@ const auth = (req, res, next) => {
     }
 }
 
-// AUTH MIDDLEWARE
-/*const auth = async (req, res, next) => {
-    //example header => "Authorization":"bearer kdf909sdfsd98f987d"
-    const { authorization } = req.headers; //decon auth header
-    //check if header is present
-    if (authorization) {
-        try {
-            const token = authorization.split(' ')[1]; //parses token from header
-            const payload = jwt.verify(token, 'secret');
-            req.user = payload; //puts user data into request object
-            next(); //go to the route
-        } catch (error) {
-            res.status(400).json(error);
-        }
-    } else {
-        res.status(400).send('NO AUTHORIZATION HEADER');
-    }
-};*/
 ////////////////
 /// ROUTES
 ////////////////
