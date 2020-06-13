@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken') // Token for later
 
 // ANDY Auth Middleware
 const auth = (req, res, next) => {
+    // console.log(req)
     try {
         const token = req.header('x-auth-token')
         if (!token) {
@@ -15,7 +16,7 @@ const auth = (req, res, next) => {
         }
         const verified = jwt.verify(token, process.env.jwtSECRET)
         if (!verified) {
-            return res.status(401).json({msg: "Not authorized"})
+            return res.status(400).json({msg: "Not verified"})
         }
         console.log(verified)
     }   
@@ -30,6 +31,7 @@ const auth = (req, res, next) => {
 
 ////Create Route////
 router.post('/', auth, async (req, res) => {
+    console.log(req.header)
     try {
         const createdRestaurant = await Restaurant.create(req.body)
         res.status(200).json(createdRestaurant)
