@@ -5,24 +5,26 @@ const express = require('express')
 const router = express.Router()
 const Restaurant = require('../models/restaurants.js')
 const jwt = require('jsonwebtoken') // Token for later
+const auth = require ('./auth')
 
 // ANDY Auth Middleware
-const auth = (req, res, next) => {
-    try {
-        const token = req.header('x-auth-token')
-        if (!token) {
-            return res.status(401).json({msg: "Not authorized"})
-        }
-        const verified = jwt.verify(token, process.env.jwtSECRET)
-        if (!verified) {
-            return res.status(401).json({msg: "Not authorized"})
-        }
-        // console.log(verified)
-    }   
-    catch (error) {
-        res.status(500).json({error: error.message})
-    }
-}
+// const auth = (req, res, next) => {
+//     // console.log(req);
+//     try {
+//         const token = req.header('auth-token')
+//         if (!token) {
+//             return res.status(400).json({msg: "No token"})
+//         }
+//         const verified = jwt.verify(token, process.env.jwtSECRET)
+//         if (!verified) {
+//             return res.status(401).json({msg: "Not verified"})
+//         }
+//         // console.log(verified)
+//     }   
+//     catch (error) {
+//         res.status(500).json({error: error.message})
+//     }
+// }
 
 ////////////////
 /// ROUTES

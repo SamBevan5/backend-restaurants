@@ -1,12 +1,12 @@
 ////////////////
 /// DEPENDENCIES
 ////////////////
-const express = require('express')
-const router = express.Router()
-const User = require('../models/users.js')
-const jwt = require('jsonwebtoken') // Token for later
-const bcrypt = require('bcrypt') //might use for encrypting password
-const auth = require('./restaurants')
+const express = require('express');
+const router = express.Router();
+const User = require('../models/users.js');
+const jwt = require('jsonwebtoken'); // Token for later
+const bcrypt = require('bcrypt'); //might use for encrypting password
+const auth = require('./auth');
 
 ////////////////
 /// ROUTES
@@ -57,7 +57,7 @@ router.post('/login', async (req,res) => {
                 username: user.username
             }
         })
-        console.log(token)
+        // console.log(token)
     }
     catch (error) {
         res.status(500).json({error: error.message})
@@ -78,7 +78,7 @@ router.delete('/delete', auth, async (req,res) => {
 
 router.post('/validToken', async (req,res) => {
     try {
-        const token = req.header('x-auth-token')
+        const token = req.header('auth-token')
         if (!token) return res.json(false)
         const verified = jwt.verify(token, process.env.jwtSECRET)
         if (!verified) return res.json(false)
