@@ -49,13 +49,13 @@ router.post('/login', async (req,res) => {
             return res.status(400).json({msg: "This user doesn't exist"})
         const match = await bcrypt.compare(password, user.password)
         if (!match) return res.status(400).json({msg: "The password doesn't match"})
-        const token = jwt.sign({id: user._id}, process.env.jwtSECRET)
+        const token = jwt.sign({id: user._id, username:user.username}, process.env.jwtSECRET)
         res.json({
-            token,
+            token /* ,
             user: {
                 id: user._id,
-                username: user.username
-            }
+                username: user.username*/
+            
         })
         // console.log(token)
     }

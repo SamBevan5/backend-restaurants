@@ -3,7 +3,7 @@ const {Schema, model} = require('mongoose')
 const restaurantSchema = new Schema({
   restaurant: {
     cuisines: String,
-    name: {type: String, unique: true},
+    name: String,
     thumb: String,
     url: String,
     location: {
@@ -11,10 +11,11 @@ const restaurantSchema = new Schema({
       locality: String,
       city: String,
       zipcode: Number,
-    },
-  }
+    }
+  },
+  username: String
 })
 
-const Restaurant = model('restaurant', restaurantSchema)
+const Restaurant = model('restaurant2', restaurantSchema)
 
 module.exports = Restaurant
