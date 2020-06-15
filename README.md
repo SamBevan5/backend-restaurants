@@ -2,7 +2,7 @@
 
 Link to the live app on Netlify:
 
-https://relaxed-euclid-da4898.netlify.app/
+https://hungry4more.netlify.app
 
 Link to the database on Heroku:
 
